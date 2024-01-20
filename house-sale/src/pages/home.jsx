@@ -1,15 +1,28 @@
 import { createClient } from '@supabase/supabase-js'
+import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import config from '../../supabase_config.json';
 import '../App.css';
 import { useEffect, useState } from 'react';
-import { Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, tableCellClasses , TableContainer, TableHead, TableRow } from '@mui/material';
 
 const supabase_url = config.supabase_url;
 const anon_key = config.anon_key;
 const supabase = createClient(supabase_url, anon_key)
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.grey[1000],
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+        backgroundColor: theme.palette.grey[900],
+        color: theme.palette.common.white,
+    },
+}));
 
 function HomePage() {
     const navigate = useNavigate();
@@ -56,24 +69,27 @@ function HomePage() {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>House ID</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell>Price</TableCell>
-                            <TableCell>Area</TableCell>
-                            <TableCell>Date</TableCell>
+                            <StyledTableCell>House ID</StyledTableCell>
+                            <StyledTableCell>Address</StyledTableCell>
+                            <StyledTableCell>Price</StyledTableCell>
+                            <StyledTableCell>Area</StyledTableCell>
+                            <StyledTableCell>Date</StyledTableCell>
                         </TableRow>
                     </TableHead>
-                    {houseAdsList.map((houseAd) => (
-                        <TableRow>
-                            <TableCell>{houseAd.id}</TableCell>
-                            <TableCell>{houseAd.city}, {houseAd.state}, {houseAd.postal_code}</TableCell>
-                            <TableCell>{houseAd.price_in_usd}</TableCell>
-                            <TableCell>{houseAd.house_area + houseAd.basement_area}</TableCell>
-                            <TableCell>{houseAd.date}</TableCell>
-                        </TableRow>
-                    ))}
+                    <TableBody>
+                        {houseAdsList.map((houseAd) => (
+                            <TableRow key={houseAd.id}>
+                                <StyledTableCell>{houseAd.id}</StyledTableCell>
+                                <StyledTableCell>{houseAd.city}, {houseAd.state}, {houseAd.postal_code}</StyledTableCell>
+                                <StyledTableCell>{houseAd.price_in_usd}</StyledTableCell>
+                                <StyledTableCell>{houseAd.house_area + houseAd.basement_area}</StyledTableCell>
+                                <StyledTableCell>{houseAd.date}</StyledTableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
                 </Table>
             </TableContainer>
+            <br/>
             <Button variant="contained" color="error" endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>Logout</Button>
         </div>
     );

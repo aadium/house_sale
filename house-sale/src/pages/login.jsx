@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js'
 import Button from '@mui/material/Button';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 import config from '../../supabase_config.json';
 
 const supabase_url = config.supabase_url;
@@ -28,6 +29,10 @@ function LoginPage() {
         }
     };
 
+    const handleRegistrationNavigate = () => {
+        navigate('/register');
+    }
+
     return (
         <div className='login-register-div'>
             <h1>Login Page</h1>
@@ -45,6 +50,8 @@ function LoginPage() {
             /><br/>
             <br/>
             <Button variant="contained" color="success" endIcon={<LoginOutlinedIcon />} onClick={handleLogin}>Login</Button>
+            <br/>
+            <Button endIcon={<AppRegistrationOutlinedIcon />} onClick={handleRegistrationNavigate}>Register</Button>
         </div>
     );
 }
