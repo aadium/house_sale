@@ -1,0 +1,1 @@
+id,region,state,city,postal_code,date,bedrooms,bathrooms,floors,house_condition,schools_nearby,built_year,house_area,basement_area,living_area,price_in_usd

@@ -1,6 +1,8 @@
+import pickle
 import pandas as pd
+import matplotlib.pyplot as plt
+
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
 from sklearn.ensemble import RandomForestRegressor
 
 # Step 2: Load the CSV file into a pandas DataFrame
@@ -21,7 +23,18 @@ model.fit(X_train, y_train)
 
 # Evaluate the model using the testing data
 predictions = model.predict(X_test)
-print(predictions)
-mse = mean_squared_error(y_test, predictions)
 
-print(f'Mean Squared Error: {mse}')
+# Scatter plot of observed vs predicted values
+plt.scatter(y_test, predictions)
+plt.xlabel('True Values')
+plt.ylabel('Predictions')
+plt.title('True Values vs Predictions')
+plt.grid(True)
+plt.show()
+
+# Save the trained model as a pickle string.
+saved_model = pickle.dumps(model)
+
+# Save the model to disk
+with open('saved_model.pkl', 'wb') as file:
+    pickle.dump(model, file)
