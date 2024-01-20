@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js'
+import Button from '@mui/material/Button';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import config from '../../supabase_config.json';
 
 const supabase_url = config.supabase_url;
@@ -41,7 +43,8 @@ function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             /><br/>
-            <button onClick={handleLogin}>Login</button>
+            <br/>
+            <Button variant="contained" color="success" endIcon={<LoginOutlinedIcon />} onClick={handleLogin}>Login</Button>
         </div>
     );
 }

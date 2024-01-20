@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js'
+import Button from '@mui/material/Button';
+import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 import config from '../../supabase_config.json';
 
 const supabase_url = config.supabase_url;
@@ -59,7 +61,8 @@ function RegisterPage() {
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
             /><br/>
-            <button onClick={handleRegister}>Register</button>
+            <br/>
+            <Button variant="contained" endIcon={<AppRegistrationOutlinedIcon />} onClick={handleRegister}>Register</Button>
         </div>
     );
 }
