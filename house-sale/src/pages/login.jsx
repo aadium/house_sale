@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js'
-import Button from '@mui/material/Button';
+import { Button, TextField, Box, Typography } from '@mui/material';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 import config from '../../supabase_config.json';
@@ -33,26 +33,58 @@ function LoginPage() {
         navigate('/register');
     }
 
+
     return (
-        <div className='login-register-div'>
-            <h1>Login Page</h1>
-            <input
-                type="text"
-                placeholder="email"
+        <Box
+            className='login-register-div'
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+        >
+            <Typography variant="h3" gutterBottom>Login Page</Typography>
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-            /><br/>
-            <input
+            />
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                name="password"
+                label="Password"
                 type="password"
-                placeholder="Password"
+                id="password"
+                autoComplete="current-password"
                 value={password}
+                onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
                 onChange={(e) => setPassword(e.target.value)}
-            /><br/>
-            <br/>
-            <Button variant="contained" color="success" endIcon={<LoginOutlinedIcon />} onClick={handleLogin}>Login</Button>
-            <br/>
-            <Button endIcon={<AppRegistrationOutlinedIcon />} onClick={handleRegistrationNavigate}>Register</Button>
-        </div>
+            />
+            <Button
+                variant="contained"
+                color="success"
+                endIcon={<LoginOutlinedIcon />}
+                onClick={handleLogin}
+                sx={{ mt: 2 }}
+            >
+                Login
+            </Button>
+            <Button
+                endIcon={<AppRegistrationOutlinedIcon />}
+                onClick={handleRegistrationNavigate}
+                sx={{ mt: 2 }}
+            >
+                Register
+            </Button>
+        </Box>
     );
 }
 

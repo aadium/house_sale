@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js'
-import Button from '@mui/material/Button';
+import { Button, TextField, Box, Typography } from '@mui/material';
+import { InputAdornment } from '@mui/material';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 import config from '../../supabase_config.json';
 
@@ -34,36 +36,79 @@ function RegisterPage() {
         }
     };
 
+
     return (
-        <div className='login-register-div'>
-            <h1>Register Page</h1>
-            <input
-                type="text"
-                placeholder="email"
+        <Box
+            className='login-register-div'
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+        >
+            <Typography variant="h4" gutterBottom>Register Page</Typography>
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-            /><br/>
-            <input
+            />
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                name="password"
+                label="Password"
                 type="password"
-                placeholder="Password"
+                id="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-            /><br/>
-            <input
-                type="text"
-                placeholder="Full Name"
+            />
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                id="full_name"
+                label="Full Name"
+                name="full_name"
                 value={full_name}
                 onChange={(e) => setFullName(e.target.value)}
-            /><br/>
-            <input
+            />
+            <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                id="dob"
+                label="Date of Birth"
                 type="date"
-                placeholder="Date of Birth"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <CalendarTodayIcon />
+                        </InputAdornment>
+                    ),
+                }}
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
-            /><br/>
-            <br/>
-            <Button variant="contained" endIcon={<AppRegistrationOutlinedIcon />} onClick={handleRegister}>Register</Button>
-        </div>
+            />
+            <Button
+                variant="contained"
+                endIcon={<AppRegistrationOutlinedIcon />}
+                onClick={handleRegister}
+                sx={{ mt: 2 }}
+            >
+                Register
+            </Button>
+        </Box>
     );
 }
 
