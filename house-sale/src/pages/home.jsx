@@ -1,53 +1,43 @@
-import { createClient } from '@supabase/supabase-js'
-import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import config from '../../supabase_config.json';
 import '../App.css';
 import { useEffect, useState } from 'react';
 import HouseListingTile from '../components/house_listing_tile/house_listing_tile';
 import { Grid } from '@mui/material';
-
-const supabase_url = config.supabase_url;
-const anon_key = config.anon_key;
-const supabase = createClient(supabase_url, anon_key)
 
 function HomePage() {
     const navigate = useNavigate();
     const [houseAdsList, setHouseAdsList] = useState([]);
 
     const handleLogout = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) {
-            alert(error.message);
-        } else {
+        const response = await fetch('https://house-sale-ml.onrender.com/api/auth/logout/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            alert('Logout successful');
             navigate('/login');
+        } else {
+            const error = await response.text();
+            alert(error);
         }
     }
 
     useEffect(() => {
-        handleSessionCheck();
         handleFetchHouseAds();
     }, [])
 
-    const handleSessionCheck = async () => {
-        const { data, error } = await supabase.auth.getSession()
-        if (data.session == null) {
-            navigate('/login');
-        }
-    }
-
     const handleFetchHouseAds = async () => {
-        const { data, error } = await supabase
-            .from('houses_for_sale')
-            .select()
-            .order('id')
-        if (error) {
-            alert(error.message);
+        const response = await fetch('https://house-sale-ml.onrender.com/api/get');
+        if (response.ok) {
+            const data = await response.json();
+            setHouseAdsList(data.data);
         } else {
-            setHouseAdsList(data);
-            console.log(data);
+            const error = await response.text();
+            alert(error);
         }
     }
 
