@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js'
 import { Button, TextField, Box, Typography } from '@mui/material';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
-import config from '../../supabase_config.json';
-
-const supabase_url = config.supabase_url;
-const anon_key = config.anon_key;
-const supabase = createClient(supabase_url, anon_key)
 
 function LoginPage() {
     const [email, setEmail] = useState('');
@@ -17,22 +11,34 @@ function LoginPage() {
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password,
-        });
-        if (error) {
-            alert(error.message);
-        } else {
-            alert('Login successful');
-            navigate('/');
+        try {
+            const response = await fetch('https://house-sale-ml.onrender.com/api/auth/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                }),
+            });
+
+            if (response.ok) {
+                alert('Login successful');
+                navigate('/');
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred during login');
         }
     };
 
     const handleRegistrationNavigate = () => {
         navigate('/register');
     }
-
 
     return (
         <Box

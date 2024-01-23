@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js'
 import { Button, TextField, Box, Typography } from '@mui/material';
 import { InputAdornment } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
-import config from '../../supabase_config.json';
-
-const supabase_url = config.supabase_url;
-const anon_key = config.anon_key;
-const supabase = createClient(supabase_url, anon_key)
+import axios from 'axios';
 
 function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -20,22 +15,19 @@ function RegisterPage() {
     const navigate = useNavigate();
 
     const handleRegister = async () => {
-        const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-                name: full_name,
+        try {
+            const response = await axios.post('/api/auth/register', {
+                email: email,
+                password: password,
+                full_name: full_name,
                 dob: dob,
-            }
-        })
-        if (error) {
-            alert(error.message)
-        } else {
-            alert('Register successful')
-            navigate('/')
+            });
+            alert('Register successful');
+            navigate('/');
+        } catch (error) {
+            alert(error.message);
         }
     };
-
 
     return (
         <Box
