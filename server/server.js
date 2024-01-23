@@ -34,9 +34,13 @@ app.post("/api/auth/logout", async (req, res) => {
 app.post("/api/auth/register", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
+    const full_name = req.body.full_name;
+    const dob = req.body.dob;
     const { data, error } = await supabase.auth.signUp({
         email,
-        password
+        password,
+        full_name,
+        dob
     });
 
     if (error) return res.status(401).json({ error: error.message });
