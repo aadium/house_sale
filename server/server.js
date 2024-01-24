@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
+const { StatusCodes } = require("http-status-codes");
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -47,8 +48,31 @@ app.post("/api/auth/register", async (req, res) => {
     return res.status(200).json({ user: data.user });
 });
 
+app.get("/api/auth/check", async (req, res) => {
+    const token = req.headers.authorization;
+    if (!token)
+        return res.status(StatusCodes.UNAUTHORIZED).json({ error: "Not logged in" });
+    try {
+        const { data } = await supabase.auth.getUser(token.split(" ")[1]);
+        return res.status(StatusCodes.OK).json(data);
+    } catch (error) {
+        console.log(error);
+        return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: "Internal Server Error" });
+    }
+});
+
 app.get("/api/get", async (req, res) => {
-    const { data, error } = await supabase.from('houses_for_sale').select();
+    const { data, error } = await supabase.from('houses_for_sale').select('id,region,state,city,price_in_usd');
+
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json({ data });
+});
+
+app.get("/api/get/:id", async (req, res) => {
+    const id = req.params.id;
+    const { data, error } = await supabase.from('houses_for_sale').select().eq('id', id);
 
     if (error) return res.status(500).json({ error: error.message });
     return res.status(200).json({ data });
