@@ -64,7 +64,7 @@ app.get("/api/auth/check", async (req, res) => {
 });
 
 app.get("/api/get", async (req, res) => {
-    const { data, error } = await supabase.from('houses_for_sale').select('id,region,state,city,price_in_usd');
+    const { data, error } = await supabase.from('houses_for_sale').select();
 
     if (error) return res.status(500).json({ error: error.message });
     return res.status(200).json({ data });
