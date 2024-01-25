@@ -77,6 +77,7 @@ function LoginPage() {
             <Button
                 variant="contained"
                 color="success"
+                style={{boxShadow: '0px 0px 0px 0px'}}
                 endIcon={<LoginOutlinedIcon />}
                 onClick={handleLogin}
                 sx={{ mt: 2 }}
@@ -84,6 +85,7 @@ function LoginPage() {
                 Login
             </Button>
             <Button
+            style={{boxShadow: '0px 0px 0px 0px'}}
                 endIcon={<AppRegistrationOutlinedIcon />}
                 onClick={handleRegistrationNavigate}
                 sx={{ mt: 2 }}

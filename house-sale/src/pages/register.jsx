@@ -94,6 +94,7 @@ function RegisterPage() {
             />
             <Button
                 variant="contained"
+                style={{boxShadow: '0px 0px 0px 0px'}}
                 endIcon={<AppRegistrationOutlinedIcon />}
                 onClick={handleRegister}
                 sx={{ mt: 2 }}

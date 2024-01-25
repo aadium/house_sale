@@ -52,7 +52,7 @@ function HomePage() {
                 ))}
             </Grid>
             <br/>
-            <Button variant="contained" color="error" endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>Logout</Button>
+            <Button variant="contained" style={{boxShadow: '0px 0px 0px 0px'}} color="error" endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>Logout</Button>
         </div>
     );
 }
