@@ -13,7 +13,7 @@ function HouseListingTile({ houseAd }) {
     return (
         <Card style={{ border: '2px solid black', boxShadow: '0px 0px 0px 0px' }}>
             <CardContent>
-                <img src={getHouseImage(houseAd.id)} alt="House" style={{ width: '370px', height: '270px' }} />
+                <img src={getHouseImage(houseAd.id)} alt="House" style={{ width: '100%', height: '220px' }} />
                 <Typography variant="h6">{houseAd.city}, {houseAd.state}, {houseAd.postal_code}</Typography>
                 <Typography variant="body1">Bedrooms: {houseAd.bedrooms}</Typography>
                 <Typography variant="body1">Bathrooms: {houseAd.bathrooms}</Typography>
