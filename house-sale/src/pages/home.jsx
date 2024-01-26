@@ -9,6 +9,7 @@ import { Grid } from '@mui/material';
 function HomePage() {
     const navigate = useNavigate();
     const [houseAdsList, setHouseAdsList] = useState([]);
+    const [loading, setLoading] = useState(true); // Add loading state
 
     const handleLogout = async () => {
         const response = await fetch('https://house-sale-ml.onrender.com/api/auth/logout/', {
@@ -26,10 +27,6 @@ function HomePage() {
         }
     }
 
-    useEffect(() => {
-        handleFetchHouseAds();
-    }, [])
-
     const handleFetchHouseAds = async () => {
         const response = await fetch('https://house-sale-ml.onrender.com/api/get');
         if (response.ok) {
@@ -39,18 +36,27 @@ function HomePage() {
             const error = await response.text();
             alert(error);
         }
+        setLoading(false); // Set loading state to false after data is loaded
     }
+
+    useEffect(() => {
+        handleFetchHouseAds();
+    }, [])
 
     return (
         <div>
             <h1>Welcome</h1>
-            <Grid container spacing={3}>
-                {houseAdsList.map((houseAd) => (
-                    <Grid item xs={12} sm={6} md={4} key={houseAd.id}>
-                        <HouseListingTile houseAd={houseAd} />
-                    </Grid>
-                ))}
-            </Grid>
+            {loading ? (
+                <div>Loading...</div>
+            ) : (
+                <Grid container spacing={3}>
+                    {houseAdsList.map((houseAd) => (
+                        <Grid item xs={12} sm={6} md={4} key={houseAd.id}>
+                            <HouseListingTile houseAd={houseAd} />
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
             <br/>
             <Button variant="contained" style={{boxShadow: '0px 0px 0px 0px'}} color="error" endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>Logout</Button>
         </div>
