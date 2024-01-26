@@ -46,7 +46,7 @@ function HomePage() {
     return (
         <div>
             <h1>Welcome</h1>
-            {loading ? (
+            {loading ? ( // Conditionally render loader or content based on loading state
                 <div>Loading...</div>
             ) : (
                 <Grid container spacing={3}>
