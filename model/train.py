@@ -1,40 +1,47 @@
-import pickle
 import pandas as pd
-import matplotlib.pyplot as plt
-
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
+import pickle
 
-# Step 2: Load the CSV file into a pandas DataFrame
-df = pd.read_csv('machine_data.csv')
+# Step 1: Load and prepare the training data
+df = pd.read_csv('model/machine_data.csv')
 
-# Step 3: Split the DataFrame into features (X) and target (y)
+# Split the DataFrame into features (X) and target variable (y)
 X = df.drop('price', axis=1)
 y = df['price']
 
-# Step 4: Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
-# Create a Random Forest model
+# Step 2: Train the machine learning model
 model = RandomForestRegressor(n_estimators=100, random_state=42)
-
-# Train the model using the training data
 model.fit(X_train, y_train)
 
-# Evaluate the model using the testing data
-predictions = model.predict(X_test)
+# Step 3: Save the trained model to disk
+with open('model/saved_model.pkl', 'wb') as model_file:
+    pickle.dump(model, model_file)
 
-# Scatter plot of observed vs predicted values
-plt.scatter(y_test, predictions)
-plt.xlabel('True Values')
-plt.ylabel('Predictions')
-plt.title('True Values vs Predictions')
-plt.grid(True)
-plt.show()
+# Step 4: Prediction
+# Load the trained model from disk
+with open('model/saved_model.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
 
-# Save the trained model as a pickle string.
-saved_model = pickle.dumps(model)
+# Define new house data for prediction
+new_house_data = {
+    'bathrooms': 1,
+    'house_condition': 3,
+    'house_grade': 6,
+    'schools_nearby': 0,
+    'built_year': 1935,
+    'house_area': 860,
+    'inflation_rate': -0.9,
+    'bedrooms': 3,
+    'floors': 1,
+    'living_area': 1140,
+}
 
-# Save the model to disk
-with open('saved_model.pkl', 'wb') as file:
-    pickle.dump(model, file)
+# Convert new house data to DataFrame and reshape for prediction
+new_house_df = pd.DataFrame([new_house_data])
+predicted_price = model.predict(new_house_df)
+
+print("Predicted price for the new house:", predicted_price)
