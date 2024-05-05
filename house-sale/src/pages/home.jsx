@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import '../App.css';
-import { useEffect, useState } from 'react';
-import HouseListingTile from '../components/house_listing_tile/house_listing_tile';
 import { Grid } from '@mui/material';
+import Button from '@mui/material/Button';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../App.css';
+import HouseListingTile from '../components/house_listing_tile/house_listing_tile';
 
 function HomePage() {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ function HomePage() {
     const [loading, setLoading] = useState(true); // Add loading state
 
     const handleLogout = async () => {
-        const response = await fetch('https://house-sale-ml.onrender.com/api/auth/logout/', {
+        const response = await fetch('http://localhost:5174/api/auth/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ function HomePage() {
     }
 
     const handleFetchHouseAds = async () => {
-        const response = await fetch('https://house-sale-ml.onrender.com/api/get');
+        const response = await fetch('http://localhost:5174/api/get');
         if (response.ok) {
             const data = await response.json();
             setHouseAdsList(data.data);
@@ -57,8 +57,8 @@ function HomePage() {
                     ))}
                 </Grid>
             )}
-            <br/>
-            <Button variant="contained" style={{boxShadow: '0px 0px 0px 0px'}} color="error" endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>Logout</Button>
+            <br />
+            <Button variant="contained" style={{ boxShadow: '0px 0px 0px 0px' }} color="error" endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>Logout</Button>
         </div>
     );
 }

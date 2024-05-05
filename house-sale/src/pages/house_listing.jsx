@@ -1,6 +1,6 @@
+import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
 import StarRatings from 'react-star-ratings';
 
 function HouseListingPage(params) {
@@ -16,7 +16,7 @@ function HouseListingPage(params) {
     }
 
     const handleFetchHouseAdDetails = async () => {
-        const response = await fetch(`https://house-sale-ml.onrender.com/api/get/${id}`);
+        const response = await fetch(`http://localhost:5174/api/get/${id}`);
         if (response.ok) {
             const data = await response.json();
             setHouseAdData(data.data);
@@ -36,9 +36,9 @@ function HouseListingPage(params) {
                 <Card key={houseAd.id} style={{ marginBottom: '20px' }}>
                     <CardContent>
                         <Typography variant="h5">{houseAd.city}, {houseAd.state} [{houseAd.region}], {houseAd.postal_code}</Typography>
-                        <br/>
+                        <br />
                         <Typography variant="subtitle1">
-                            Condition<br/>  
+                            Condition<br />
                             <StarRatings
                                 rating={houseAd.house_condition}
                                 numberOfStars={5}
@@ -47,8 +47,8 @@ function HouseListingPage(params) {
                                 starRatedColor="black"
                             />
                         </Typography>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={8}>
                                 <Typography variant="subtitle1">Built in: {houseAd.built_year}</Typography>
