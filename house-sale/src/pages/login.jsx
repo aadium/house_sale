@@ -1,8 +1,8 @@
+import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField, Box, Typography } from '@mui/material';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutlined';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ function LoginPage() {
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('https://house-sale-ml.onrender.com/api/auth/login/', {
+            const response = await fetch('http://localhost:5174/api/auth/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ function LoginPage() {
             <Button
                 variant="contained"
                 color="success"
-                style={{boxShadow: '0px 0px 0px 0px'}}
+                style={{ boxShadow: '0px 0px 0px 0px' }}
                 endIcon={<LoginOutlinedIcon />}
                 onClick={handleLogin}
                 sx={{ mt: 2 }}
@@ -85,7 +85,7 @@ function LoginPage() {
                 Login
             </Button>
             <Button
-            style={{boxShadow: '0px 0px 0px 0px'}}
+                style={{ boxShadow: '0px 0px 0px 0px' }}
                 endIcon={<AppRegistrationOutlinedIcon />}
                 onClick={handleRegistrationNavigate}
                 sx={{ mt: 2 }}

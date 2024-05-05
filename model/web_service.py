@@ -6,7 +6,7 @@ import numpy as np
 app = Flask(__name__)
 
 # Load the pickled model
-with open('model/saved_model.pkl', 'rb') as model_file:
+with open('saved_model.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
 # Define an endpoint for model inference
