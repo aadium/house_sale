@@ -12,7 +12,7 @@ function HomePage() {
     const [loading, setLoading] = useState(true); // Add loading state
 
     const handleLogout = async () => {
-        const response = await fetch('http://localhost:5174/api/auth/logout/', {
+        const response = await fetch('https://house-sale-ml.onrender.com/api/auth/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ function HomePage() {
     }
 
     const handleFetchHouseAds = async () => {
-        const response = await fetch('http://localhost:5174/api/get');
+        const response = await fetch('https://house-sale-ml.onrender.com/api/get');
         if (response.ok) {
             const data = await response.json();
             setHouseAdsList(data.data);
@@ -39,7 +39,20 @@ function HomePage() {
         setLoading(false); // Set loading state to false after data is loaded
     }
 
+    const checkLogin = async () => {
+        const response = await fetch('https://house-sale-ml.onrender.com/api/auth/check', {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
+        console.log(response);
+        if (!response.ok) {
+            navigate('/login');
+        }
+    }
+
     useEffect(() => {
+        checkLogin();
         handleFetchHouseAds();
     }, [])
 
