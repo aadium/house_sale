@@ -16,7 +16,7 @@ function HouseListingPage(params) {
     }
 
     const handleFetchHouseAdDetails = async () => {
-        const response = await fetch(`https://house-sale-ml.onrender.com/api/get/${id}`);
+        const response = await fetch(`http://localhost:5174/api/get/${id}`);
         if (response.ok) {
             const data = await response.json();
             setHouseAdData(data.data);

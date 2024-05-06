@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
-const { StatusCodes } = require("http-status-codes");
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -49,17 +48,14 @@ app.post("/api/auth/register", async (req, res) => {
 });
 
 app.get("/api/auth/check", async (req, res) => {
-    const token = req.headers.authorization;
-    if (!token)
-        return res.status(StatusCodes.UNAUTHORIZED).json({ error: "Not logged in" });
     try {
-        const { data } = await supabase.auth.getUser(token.split(" ")[1]);
-        return res.status(StatusCodes.OK).json(data);
+        const { data, error } = await supabase.auth.getSession()
+        if (data.session != null) {
+            return res.json(true);
+        }
+        return res.json(false);
     } catch (error) {
-        console.log(error);
-        return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ error: "Internal Server Error" });
+        return res.json(false);
     }
 });
 
