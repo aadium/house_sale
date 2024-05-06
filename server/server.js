@@ -78,6 +78,29 @@ app.get("/api/get/:id", async (req, res) => {
     return res.status(200).json({ data });
 });
 
+app.post("/api/post", async (req, res) => {
+    const { data, error } = await supabase.from('houses_for_sale').insert([req.body]);
+
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json({ data });
+});
+
+app.put("/api/put/:id", async (req, res) => {
+    const id = req.params.id;
+    const { data, error } = await supabase.from('houses_for_sale').update(req.body).eq('id', id);
+
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json({ data });
+});
+
+app.delete("/api/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    const { data, error } = await supabase.from('houses_for_sale').delete().eq('id', id);
+
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json({ data });
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)
 })
