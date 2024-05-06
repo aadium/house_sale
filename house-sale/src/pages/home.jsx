@@ -12,7 +12,7 @@ function HomePage() {
     const [loading, setLoading] = useState(true); // Add loading state
 
     const handleLogout = async () => {
-        const response = await fetch('https://house-sale-ml.onrender.com/api/auth/logout/', {
+        const response = await fetch('http://localhost:5174/api/auth/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ function HomePage() {
     }
 
     const handleFetchHouseAds = async () => {
-        const response = await fetch('https://house-sale-ml.onrender.com/api/get');
+        const response = await fetch('http://localhost:5174/api/get');
         if (response.ok) {
             const data = await response.json();
             setHouseAdsList(data.data);
@@ -40,13 +40,14 @@ function HomePage() {
     }
 
     const checkLogin = async () => {
-        const response = await fetch('https://house-sale-ml.onrender.com/api/auth/check', {
+        const response = await fetch('http://localhost:5174/api/auth/check', {
             headers: {
                 'Authorization': localStorage.getItem('token'),
             },
         });
-        console.log(response);
-        if (!response.ok) {
+        const isLoggedIn = await response.json();
+        console.log(isLoggedIn); // Log the result after reading the response body
+        if (!isLoggedIn) {
             navigate('/login');
         }
     }
@@ -59,6 +60,9 @@ function HomePage() {
     return (
         <div>
             <h1>Welcome</h1>
+            <Button variant="contained" style={{ boxShadow: '0px 0px 0px 0px' }} color="error" endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>Logout</Button>
+            <br />
+            <br />
             {loading ? ( // Conditionally render loader or content based on loading state
                 <div>Loading...</div>
             ) : (
@@ -70,8 +74,6 @@ function HomePage() {
                     ))}
                 </Grid>
             )}
-            <br />
-            <Button variant="contained" style={{ boxShadow: '0px 0px 0px 0px' }} color="error" endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>Logout</Button>
         </div>
     );
 }

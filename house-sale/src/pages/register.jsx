@@ -16,7 +16,7 @@ function RegisterPage() {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post('/api/auth/register', {
+            const response = await axios.post('http://localhost:5174/api/auth/register', {
                 email: email,
                 password: password,
                 full_name: full_name,
