@@ -31,6 +31,7 @@ function HomePage() {
         const response = await fetch('http://localhost:5174/api/get');
         if (response.ok) {
             const data = await response.json();
+            console.log(data);
             setHouseAdsList(data.data);
         } else {
             const error = await response.text();

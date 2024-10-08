@@ -24,7 +24,6 @@ function LoginPage() {
             });
 
             if (response.ok) {
-                alert('Login successful');
                 navigate('/');
             } else {
                 const errorData = await response.json();
