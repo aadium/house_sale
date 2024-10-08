@@ -20,7 +20,10 @@ app.post("/api/auth/login", async (req, res) => {
         password
     });
 
-    if (error) return res.status(401).json({ error: error.message });
+    if (error) {
+        console.error(error);
+        return res.status(401).json({ error: error.message })
+    };
     return res.status(200).json({ user: data.user });
 });
 
@@ -43,7 +46,10 @@ app.post("/api/auth/register", async (req, res) => {
         dob
     });
 
-    if (error) return res.status(401).json({ error: error.message });
+    if (error) {
+        console.error(error);
+        return res.status(401).json({ error: error.message })
+    };
     return res.status(200).json({ user: data.user });
 });
 

@@ -35,12 +35,12 @@ function HouseListingPage(params) {
             {houseAdData.map((houseAd) => (
                 <Card key={houseAd.id} style={{ marginBottom: '20px' }}>
                     <CardContent>
-                        <Typography variant="h5">{houseAd.city}, {houseAd.state} [{houseAd.region}], {houseAd.postal_code}</Typography>
+                        <Typography variant="h5">{houseAd.city}, {houseAd.state}, {houseAd.postal_code}</Typography>
                         <br />
                         <Typography variant="subtitle1">
                             Condition<br />
                             <StarRatings
-                                rating={houseAd.house_condition}
+                                rating={houseAd.condition}
                                 numberOfStars={5}
                                 starDimension="20px"
                                 starSpacing="2px"
@@ -56,8 +56,6 @@ function HouseListingPage(params) {
                                 <Typography variant="subtitle1">Bathrooms: {houseAd.bathrooms}</Typography>
                                 <Typography variant="subtitle1">Floors: {houseAd.floors}</Typography>
                                 <Typography variant="subtitle1">Schools Nearby: {houseAd.schools_nearby}</Typography>
-                                <Typography variant="subtitle1">House Area: {houseAd.house_area} sq ft</Typography>
-                                <Typography variant="subtitle1">Basement Area: {houseAd.basement_area} sq ft</Typography>
                                 <Typography variant="subtitle1">Living Area: {houseAd.living_area} sq ft</Typography>
                             </Grid>
                             <Grid item xs={12} md={4}>
