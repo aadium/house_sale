@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
-    //checkLogin();
+    checkLogin();
     handleFetchHouseAds();
     setDarkMode(JSON.parse(localStorage.getItem('darkMode') || 'false'));
   }, []);

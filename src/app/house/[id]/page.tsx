@@ -23,7 +23,7 @@ const HouseListingPage: React.FC = () => {
   };
 
   const handleFetchHouseAdDetails = async () => {
-    const response = await fetch(`http://localhost:3000/api/data/get?id=${id}`);
+    const response = await fetch(`http://localhost:3000/api/data/get/${id}`);
     if (response.ok) {
       const data = await response.json();
       setHouseAdData(data.data);
@@ -40,7 +40,7 @@ const HouseListingPage: React.FC = () => {
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
-      stars.push(i <= rating ? <FaStar key={i} className="text-yellow-500" /> : <FaRegStar key={i} className="text-yellow-500" />);
+      stars.push(i <= rating ? <FaStar key={i} className="text-yellow-500 text-2xl" /> : <FaRegStar key={i} className="text-yellow-500 text-2xl" />);
     }
     return stars;
   };
@@ -50,26 +50,26 @@ const HouseListingPage: React.FC = () => {
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <div className="p-8">
         {houseAdData ? (
-          <div className={`shadow-md rounded-lg mb-6 p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-            <h2 className="text-2xl font-bold mb-4">{houseAdData.city}, {houseAdData.state}, {houseAdData.postal_code}</h2>
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold">Condition</h3>
-              <div className="flex">
+          <div className={`shadow-lg rounded-lg mb-8 p-6 ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'}`}>
+            <h2 className="text-3xl font-bold mb-4">{houseAdData.city}, {houseAdData.state}, {houseAdData.postal_code}</h2>
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-2">Condition</h3>
+              <div className="flex items-center">
                 {renderStars(houseAdData.condition)}
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-2">
-                <p className="text-lg">Built in: {houseAdData.built_year}</p>
-                <p className="text-lg">Bedrooms: {houseAdData.bedrooms}</p>
-                <p className="text-lg">Bathrooms: {houseAdData.bathrooms}</p>
-                <p className="text-lg">Floors: {houseAdData.floors}</p>
-                <p className="text-lg">Schools Nearby: {houseAdData.schools_nearby}</p>
-                <p className="text-lg">Living Area: {houseAdData.living_area} sq ft</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="md:col-span-2 space-y-4">
+                <p className="text-lg"><span className="font-semibold">Built in:</span> {houseAdData.built_year}</p>
+                <p className="text-lg"><span className="font-semibold">Bedrooms:</span> {houseAdData.bedrooms}</p>
+                <p className="text-lg"><span className="font-semibold">Bathrooms:</span> {houseAdData.bathrooms}</p>
+                <p className="text-lg"><span className="font-semibold">Floors:</span> {houseAdData.floors}</p>
+                <p className="text-lg"><span className="font-semibold">Schools Nearby:</span> {houseAdData.schools_nearby}</p>
+                <p className="text-lg"><span className="font-semibold">Living Area:</span> {houseAdData.living_area} sq ft</p>
               </div>
-              <div>
-                <img src={getHouseImage(houseAdData.id)} alt="House" className="w-full rounded-lg" />
-                <button className="bg-blue-500 text-white px-4 py-2 rounded mt-4 w-full">
+              <div className="flex flex-col items-center">
+                <img src={getHouseImage(houseAdData.id)} alt="House" className="w-full rounded-lg mb-4" />
+                <button className="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 transition duration-200">
                   Purchase
                 </button>
               </div>
