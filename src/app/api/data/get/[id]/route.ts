@@ -6,9 +6,9 @@ const supabaseKey = process.env.SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function GET(req: NextRequest) {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
-    
+    const { pathname } = req.nextUrl;
+    const id = pathname.split('/').pop();
+
     if (!id) {
         return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
