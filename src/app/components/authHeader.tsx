@@ -7,34 +7,12 @@ interface HeaderProps {
   setDarkMode: (value: boolean) => void;
 }
 
-const Header: FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
-  const router = useRouter();
-  const handleLogout = async () => {
-    const response = await fetch('/api/auth/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (response.ok) {
-      alert('Logout successful');
-      localStorage.removeItem('token');
-      router.push('/login');
-    } else {
-      const error = await response.text();
-      alert(error);
-    }
-  };
-
+const AuthHeader: FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
   return (
     <nav className={`fixed flex justify-between w-full p-2 ${
         darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-300 text-gray-900'
       }`}>
-      <h1 className="text-3xl ml-4 mt-1 font-bold hover:cursor-pointer" onClick={
-        () => {
-          router.push('/');
-        }
-      }>House Sale</h1>
+      <h1 className="text-3xl ml-4 mt-1 font-bold hover:cursor-pointer">House Sale</h1>
       <div className="flex items-center space-x-4">
         <button
           className={`${
@@ -53,17 +31,9 @@ const Header: FC<HeaderProps> = ({ darkMode, setDarkMode }) => {
             )
           }
         </button>
-        <button
-          className={`${
-            darkMode ? 'bg-red-500 text-gray-800' : 'bg-red-600 text-white'
-          } px-4 py-2 rounded font-semibold`}
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
       </div>
     </nav>
   );
 };
 
-export default Header;
+export default AuthHeader;
